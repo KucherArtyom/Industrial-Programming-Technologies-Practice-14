@@ -1,0 +1,18 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:Kuc1804SX@db:5432/pr10?sslmode=disable
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_PASSWORD=Kuc1804SX
+      - POSTGRES_DB=pr10
+    volumes:
+      - ./data:/var/lib/postgresql/data
