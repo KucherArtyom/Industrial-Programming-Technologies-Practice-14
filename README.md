@@ -1,5 +1,5 @@
 # Industrial-Programming-Technologies-Practice-14 (ЭФМО-02-24 Кучер Артем Сергеевич)
-## Swagger + Docker (Интернет-магазина электронники)
+## Swagger + Docker (Интернет-магазин электронники)
 ### Swagger UI
 
 ![image](https://github.com/user-attachments/assets/91fa5eb3-8942-4e47-ae52-0db2dfa79dcd)
