@@ -6,7 +6,7 @@
 
 ![image](https://github.com/user-attachments/assets/b6cd13c7-0959-4746-8fda-f847df1c86ec)
 
-### func login
+#### func login
 ```
 // @Summary Login
 // @Description User login
@@ -47,7 +47,7 @@ func login(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }
 ```
-### func refreshToken
+#### func refreshToken
 ```
 // @Summary Refresh Token
 // @Description Refresh JWT token
@@ -88,7 +88,7 @@ func refreshToken(c *gin.Context) {
 	handleError(c, http.StatusBadRequest, "token is still valid")
 }
 ```
-### func main
+#### func main
 ```
 // @title My API
 // @version 1.0
@@ -151,7 +151,7 @@ func main() {
 	router.Run(":8080")
 }
 ```
-### func getBasket
+#### func getBasket
 ```
 // @Summary Get Basket
 // @Description Get a list of products in the user's basket
@@ -164,7 +164,7 @@ func getBasket(c *gin.Context) {
 	c.JSON(http.StatusOK, basket)
 }
 ```
-### func addToBasket
+#### func addToBasket
 ```
 // @Summary Add To Basket
 // @Description Add a new product to the user's basket
@@ -195,7 +195,7 @@ func addToBasket(c *gin.Context) {
 	c.JSON(http.StatusCreated, newItem)
 }
 ```
-### func deleteFromBasket
+#### func deleteFromBasket
 ```
 // @Summary Delete From Basket
 // @Description Remove a product from the user's basket
@@ -220,7 +220,7 @@ func deleteFromBasket(c *gin.Context) {
 
 }
 ```
-### func getProducts
+#### func getProducts
 ```
 // @Summary Get Products
 // @Description Get a list of products with pagination, sorting, and filtering options
@@ -268,7 +268,7 @@ func getProducts(c *gin.Context) {
 	}
 }
 ```
-### func getProductByID
+#### func getProductByID
 ```
 // @Summary Get Product by ID
 // @Description Get a single product by its ID
@@ -289,7 +289,7 @@ func getProductByID(c *gin.Context) {
 	c.JSON(http.StatusOK, product)
 }
 ```
-### func createProduct
+#### func createProduct
 ```
 // @Summary Create Product
 // @Description Add a new product
@@ -310,7 +310,7 @@ func createProduct(c *gin.Context) {
 	c.JSON(http.StatusCreated, newProduct)
 }
 ```
-### func updateProduct
+#### func updateProduct
 ```
 // @Summary Update Product
 // @Description Update an existing product by its ID
@@ -336,7 +336,7 @@ func updateProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, updatedProduct)
 }
 ```
-### func deleteProduct
+#### func deleteProduct
 ```
 // @Summary Delete Product
 // @Description Remove a product from the catalog
@@ -356,7 +356,7 @@ func deleteProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Product deleted"})
 }
 ```
-### func getProductsWithTimeout
+#### func getProductsWithTimeout
 ```
 // @Summary Get Products With Timeout
 // @Description Get a list of products with a request timeout
@@ -378,3 +378,50 @@ func getProductsWithTimeout(c *gin.Context) {
 	c.JSON(http.StatusOK, products)
 }
 ```
+
+### Docker
+#### Dockerfile
+```
+FROM golang:1.23-alpine AS builder
+
+WORKDIR /app
+
+COPY . .
+
+RUN go build -o main .
+
+FROM alpine:latest  
+
+RUN apk add --no-cache ca-certificates
+
+WORKDIR /root/
+
+COPY --from=builder /app/main .
+
+CMD ["./main"]
+```
+
+#### docker-compose.yml
+```
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:Kuc1804SX@db:5432/pr10?sslmode=disable
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_PASSWORD=Kuc1804SX
+      - POSTGRES_DB=pr10
+    volumes:
+      - ./data:/var/lib/postgresql/data
+```
+
+
+![image](https://github.com/user-attachments/assets/4c0a09b0-9564-44bd-8a0f-2bdf3212935c)
