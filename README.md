@@ -412,12 +412,12 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgres://postgres:Kuc1804SX@db:5432/pr10?sslmode=disable
+      - DATABASE_URL=postgres://postgres:пароль@db:5432/pr10?sslmode=disable
 
   db:
     image: postgres:13
     environment:
-      - POSTGRES_PASSWORD=Kuc1804SX
+      - POSTGRES_PASSWORD=пароль
       - POSTGRES_DB=pr10
     volumes:
       - ./data:/var/lib/postgresql/data
